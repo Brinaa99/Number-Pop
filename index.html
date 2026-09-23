@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Number Pop - Standard 3 Math Games</title>
+  <meta name="description" content="Pop floating balloons with multiplication multiples and division factors!">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared.css?v=retro2">
+  <link rel="stylesheet" href="style.css?v=retro2">
+</head>
+<body>
+  <div id="game-app">
+    <div id="game-container">
+      
+      <!-- Top HUD -->
+      <header id="game-hud" class="hud-panel">
+        <div class="hud-item">
+          <div class="hud-info">
+            <span class="hud-label">SCORE</span>
+            <span id="score-display" class="hud-value">0</span>
+          </div>
+        </div>
+
+        <div class="hud-item">
+          <div class="hud-info">
+            <span class="hud-label">LIVES</span>
+            <div id="lives-container" class="lives-hearts">
+              <span class="heart active">❤️</span>
+              <span class="heart active">❤️</span>
+              <span class="heart active">❤️</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hud-item">
+          <div class="hud-info">
+            <span class="hud-label">TIME</span>
+            <span id="timer-display" class="hud-value">60s</span>
+          </div>
+        </div>
+
+        <div class="hud-item">
+          <div class="hud-info">
+            <span class="hud-label">COMBO</span>
+            <span id="combo-display" class="hud-value">1x</span>
+          </div>
+        </div>
+
+        <div class="hud-nav-actions">
+          <button id="profile-btn" class="hud-btn btn-profile" title="Explorer Profile" aria-label="Explorer Profile">
+            Profile
+          </button>
+          <button id="hud-how-to-play-btn" class="hud-btn" title="How to Play" aria-label="How to Play">
+            Rules
+          </button>
+          <button id="sound-toggle-btn" class="hud-btn" title="Toggle Sound" aria-label="Toggle Sound">
+            <span id="sound-icon">Sound</span>
+          </button>
+          <a href="index.html" class="hud-btn" title="Back to Numberland" aria-label="Back to Numberland">
+            Home
+          </a>
+        </div>
+      </header>
+
+      <!-- Question Billboard -->
+      <div id="question-billboard" class="question-card">
+        <div class="question-badge">POP THE RIGHT BALLOON</div>
+        <div id="question-text" class="question-math">7 × 8 = ?</div>
+        <div class="question-hint">Tap or click the balloon with the correct answer!</div>
+      </div>
+
+      <!-- Canvas for Physics & Balloons -->
+      <div class="canvas-viewport">
+        <canvas id="game-canvas" width="800" height="600"></canvas>
+      </div>
+
+      <!-- START SCREEN -->
+      <div id="start-screen" class="overlay-screen">
+        <div class="overlay-card">
+          <div class="logo-badge">STANDARD 3 MATH</div>
+          <h1 class="game-title">NUMBER<span class="title-highlight">POP</span></h1>
+          <p class="game-subtitle">Pop the floating balloons to solve times tables &amp; division facts!</p>
+
+          <div class="character-preview">
+            <div class="preview-bubbles">
+              <span class="chip">Times Tables 1-10</span>
+              <span class="chip">Division Facts</span>
+              <span class="chip">Combo Streaks</span>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button id="start-game-btn" class="arcade-btn btn-play">START GAME</button>
+            <button id="how-to-play-btn" class="arcade-btn btn-secondary">HOW TO PLAY</button>
+            <a href="index.html" class="arcade-btn btn-home">BACK TO HUB</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- HOW TO PLAY MODAL -->
+      <div id="instructions-modal" class="overlay-screen hidden">
+        <div class="overlay-card modal-card">
+          <div class="modal-header">
+            <h2>HOW TO PLAY</h2>
+            <button id="close-instructions-btn" class="close-btn" aria-label="Close instructions">✕</button>
+          </div>
+
+          <div class="instructions-grid">
+            <div class="instruction-box">
+              <div class="inst-icon">01</div>
+              <div class="inst-content">
+                <h3>Read Equation</h3>
+                <p>Check the math question displayed on the banner (multiplication tables or division facts).</p>
+              </div>
+            </div>
+
+            <div class="instruction-box">
+              <div class="inst-icon">02</div>
+              <div class="inst-content">
+                <h3>Pop Target Balloons</h3>
+                <p>Click or tap the floating balloon that contains the correct solution to score <strong>+100 points</strong>!</p>
+              </div>
+            </div>
+
+            <div class="instruction-box">
+              <div class="inst-icon">03</div>
+              <div class="inst-content">
+                <h3>Protect Lives</h3>
+                <p>Popping an incorrect balloon costs you <strong>1 life</strong>. Keep your 3 lives safe.</p>
+              </div>
+            </div>
+
+            <div class="instruction-box">
+              <div class="inst-icon">04</div>
+              <div class="inst-content">
+                <h3>Build Combos</h3>
+                <p>Pop correct balloons in a row to chain multiplier combos and earn up to <strong>3 stars</strong>!</p>
+              </div>
+            </div>
+          </div>
+
+          <button id="start-from-instructions-btn" class="arcade-btn btn-play modal-play-btn">
+            LET'S POP!
+          </button>
+        </div>
+      </div>
+
+      <!-- END SCREEN -->
+      <div id="end-screen" class="overlay-screen hidden">
+        <div class="overlay-card">
+          <div class="logo-badge">ROUND COMPLETE</div>
+          <h2 id="end-title" class="game-title">VICTORY!</h2>
+          <p id="end-subtitle" class="game-subtitle">Super balloon popping skills!</p>
+
+          <div class="stars-awarded" id="stars-container">
+            <span class="star-slot" data-star="1">★</span>
+            <span class="star-slot" data-star="2">★</span>
+            <span class="star-slot" data-star="3">★</span>
+          </div>
+
+          <div class="score-summary-grid">
+            <div class="summary-box">
+              <span class="summary-label">FINAL SCORE</span>
+              <span id="final-score-val" class="summary-val highlight">0</span>
+            </div>
+            <div class="summary-box">
+              <span class="summary-label">POPPED</span>
+              <span id="final-popped-val" class="summary-val">0</span>
+            </div>
+            <div class="summary-box">
+              <span class="summary-label">MAX COMBO</span>
+              <span id="final-combo-val" class="summary-val">1x</span>
+            </div>
+            <div class="summary-box">
+              <span class="summary-label">TIME LEFT</span>
+              <span id="final-time-val" class="summary-val">0s</span>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button id="play-again-btn" class="arcade-btn btn-play">PLAY AGAIN</button>
+            <a href="index.html" class="arcade-btn btn-home">BACK TO NUMBERLAND</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="shared.js?v=retro3"></script>
+  <script src="game.js?v=retro3"></script>
+</body>
+</html>

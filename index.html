@@ -3,186 +3,195 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Number Pop - Standard 3 Math Games</title>
-  <meta name="description" content="Pop floating balloons with multiplication multiples and division factors!">
+  <title>Number Pop — Divisibility Balloon Game</title>
+  <meta name="description" content="Pop balloons to master divisibility rules in a retro arcade carnival atmosphere!">
+  
+  <!-- Arcade Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="shared.css?v=retro2">
-  <link rel="stylesheet" href="style.css?v=retro2">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700;800;900&family=Outfit:wght@600;700;800;900&family=JetBrains+Mono:wght@700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div id="game-app">
     <div id="game-container">
       
-      <!-- Top HUD -->
+      <!-- TOP RETRO ARCADE HUD -->
       <header id="game-hud" class="hud-panel">
-        <div class="hud-item">
-          <div class="hud-info">
+        <div class="hud-group-left">
+          <div class="hud-box hud-score">
             <span class="hud-label">SCORE</span>
-            <span id="score-display" class="hud-value">0</span>
+            <span id="score-display" class="hud-value hud-mono">000000</span>
           </div>
-        </div>
 
-        <div class="hud-item">
-          <div class="hud-info">
+          <div class="hud-box hud-lives">
             <span class="hud-label">LIVES</span>
-            <div id="lives-container" class="lives-hearts">
-              <span class="heart active">❤️</span>
-              <span class="heart active">❤️</span>
-              <span class="heart active">❤️</span>
+            <div id="lives-container" class="lives-container" aria-label="3 lives remaining">
+              <span class="arcade-heart heart-full"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span>
+              <span class="arcade-heart heart-full"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span>
+              <span class="arcade-heart heart-full"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span>
             </div>
           </div>
         </div>
 
-        <div class="hud-item">
-          <div class="hud-info">
+        <div class="hud-group-center">
+          <div class="hud-box hud-timer">
             <span class="hud-label">TIME</span>
-            <span id="timer-display" class="hud-value">60s</span>
+            <span id="timer-display" class="hud-value hud-mono">060</span>
           </div>
-        </div>
-
-        <div class="hud-item">
-          <div class="hud-info">
+          <div class="hud-box hud-round">
+            <span class="hud-label">ROUND</span>
+            <span id="round-display" class="hud-value">01 / 10</span>
+          </div>
+          <div class="hud-box hud-combo">
             <span class="hud-label">COMBO</span>
-            <span id="combo-display" class="hud-value">1x</span>
+            <span id="combo-display" class="hud-value combo-accent">1x</span>
           </div>
         </div>
 
-        <div class="hud-nav-actions">
-          <button id="profile-btn" class="hud-btn btn-profile" title="Explorer Profile" aria-label="Explorer Profile">
-            Profile
+        <div class="hud-group-right">
+          <button id="sound-toggle-btn" class="hud-icon-btn" title="Toggle Sound" aria-label="Toggle Sound">
+            <svg id="sound-on-icon" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
           </button>
-          <button id="hud-how-to-play-btn" class="hud-btn" title="How to Play" aria-label="How to Play">
-            Rules
+          <button id="hud-how-to-play-btn" class="hud-icon-btn" title="How to Play" aria-label="How to Play">
+            <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 .88-.36 1.68-.93 2.25z"/></svg>
           </button>
-          <button id="sound-toggle-btn" class="hud-btn" title="Toggle Sound" aria-label="Toggle Sound">
-            <span id="sound-icon">Sound</span>
-          </button>
-          <a href="index.html" class="hud-btn" title="Back to Numberland" aria-label="Back to Numberland">
-            Home
-          </a>
         </div>
       </header>
 
-      <!-- Question Billboard -->
-      <div id="question-billboard" class="question-card">
-        <div class="question-badge">POP THE RIGHT BALLOON</div>
-        <div id="question-text" class="question-math">7 × 8 = ?</div>
-        <div class="question-hint">Tap or click the balloon with the correct answer!</div>
-      </div>
+      <!-- ARCADE MISSION BILLBOARD -->
+      <section id="question-billboard" class="arcade-billboard">
+        <div class="billboard-top-row">
+          <span id="rule-badge" class="billboard-badge">ROUND 01 &bull; EVEN NUMBERS</span>
+          <span id="round-quota" class="billboard-quota">TARGET: 0 / 3</span>
+        </div>
+        <div id="question-text" class="billboard-main-text">POP NUMBERS DIVISIBLE BY 2</div>
+        <div id="question-hint" class="billboard-sub-text">Ends in 0, 2, 4, 6, or 8</div>
+      </section>
 
-      <!-- Canvas for Physics & Balloons -->
-      <div class="canvas-viewport">
-        <canvas id="game-canvas" width="800" height="600"></canvas>
-      </div>
+      <!-- FULLSCREEN CANVAS VIEWPORT -->
+      <main class="canvas-viewport" id="canvas-viewport">
+        <canvas id="game-canvas"></canvas>
+      </main>
 
-      <!-- START SCREEN -->
-      <div id="start-screen" class="overlay-screen">
-        <div class="overlay-card">
-          <div class="logo-badge">STANDARD 3 MATH</div>
-          <h1 class="game-title">NUMBER<span class="title-highlight">POP</span></h1>
-          <p class="game-subtitle">Pop the floating balloons to solve times tables &amp; division facts!</p>
+      <!-- MICRO-HINT TOAST -->
+      <aside id="hint-banner" class="arcade-toast hidden" role="alert">
+        <div class="toast-accent-bar"></div>
+        <div class="toast-body">
+          <div class="toast-title">DIVISIBILITY RULE</div>
+          <div id="hint-text" class="toast-text">Check the last digit!</div>
+        </div>
+      </aside>
 
-          <div class="character-preview">
-            <div class="preview-bubbles">
-              <span class="chip">Times Tables 1-10</span>
-              <span class="chip">Division Facts</span>
-              <span class="chip">Combo Streaks</span>
-            </div>
+      <!-- START SCREEN OVERLAY -->
+      <div id="start-screen" class="overlay-screen active">
+        <div class="arcade-modal start-modal">
+          <div class="modal-arcade-header">
+            <span class="arcade-badge">CARNIVAL BALLOON ARENA</span>
           </div>
 
-          <div class="action-buttons">
-            <button id="start-game-btn" class="arcade-btn btn-play">START GAME</button>
-            <button id="how-to-play-btn" class="arcade-btn btn-secondary">HOW TO PLAY</button>
-            <a href="index.html" class="arcade-btn btn-home">BACK TO HUB</a>
+          <h1 class="arcade-title">NUMBER<span class="title-pop">POP</span></h1>
+          <div class="arcade-subtitle-pill">DIVISIBILITY BALLOON GAME</div>
+          <p class="arcade-desc">Pop the floating number balloons that match the active divisibility rule!</p>
+
+          <div class="arcade-actions">
+            <button id="start-game-btn" class="arcade-btn btn-primary">
+              <span class="btn-text">PLAY</span>
+            </button>
+            <button id="how-to-play-btn" class="arcade-btn btn-secondary">
+              <span class="btn-text">HOW TO PLAY</span>
+            </button>
           </div>
         </div>
       </div>
 
-      <!-- HOW TO PLAY MODAL -->
+      <!-- COUNTDOWN OVERLAY -->
+      <div id="countdown-screen" class="overlay-screen hidden">
+        <div class="countdown-modal">
+          <div id="countdown-number" class="countdown-number">3</div>
+          <div class="countdown-label">GET READY!</div>
+        </div>
+      </div>
+
+      <!-- HOW TO PLAY OVERLAY -->
       <div id="instructions-modal" class="overlay-screen hidden">
-        <div class="overlay-card modal-card">
-          <div class="modal-header">
-            <h2>HOW TO PLAY</h2>
-            <button id="close-instructions-btn" class="close-btn" aria-label="Close instructions">✕</button>
-          </div>
+        <div class="arcade-modal instructions-modal">
+          <h2 class="modal-heading">HOW TO PLAY</h2>
 
-          <div class="instructions-grid">
-            <div class="instruction-box">
-              <div class="inst-icon">01</div>
-              <div class="inst-content">
-                <h3>Read Equation</h3>
-                <p>Check the math question displayed on the banner (multiplication tables or division facts).</p>
-              </div>
+          <div class="instruction-cards-grid">
+            <div class="inst-card">
+              <div class="inst-step-num">1</div>
+              <div class="inst-card-title">READ MISSION</div>
+              <p>Check the top billboard for the active divisibility rule.</p>
             </div>
 
-            <div class="instruction-box">
-              <div class="inst-icon">02</div>
-              <div class="inst-content">
-                <h3>Pop Target Balloons</h3>
-                <p>Click or tap the floating balloon that contains the correct solution to score <strong>+100 points</strong>!</p>
-              </div>
+            <div class="inst-card">
+              <div class="inst-step-num">2</div>
+              <div class="inst-card-title">POP BALLOONS</div>
+              <p>Click, tap, or steer under matching balloons to burst them.</p>
             </div>
 
-            <div class="instruction-box">
-              <div class="inst-icon">03</div>
-              <div class="inst-content">
-                <h3>Protect Lives</h3>
-                <p>Popping an incorrect balloon costs you <strong>1 life</strong>. Keep your 3 lives safe.</p>
-              </div>
-            </div>
-
-            <div class="instruction-box">
-              <div class="inst-icon">04</div>
-              <div class="inst-content">
-                <h3>Build Combos</h3>
-                <p>Pop correct balloons in a row to chain multiplier combos and earn up to <strong>3 stars</strong>!</p>
-              </div>
+            <div class="inst-card">
+              <div class="inst-step-num">3</div>
+              <div class="inst-card-title">BUILD COMBOS</div>
+              <p>Chain correct pops without missing to multiply your score!</p>
             </div>
           </div>
 
-          <button id="start-from-instructions-btn" class="arcade-btn btn-play modal-play-btn">
-            LET'S POP!
-          </button>
+          <div class="arcade-actions">
+            <button id="close-instructions-btn" class="arcade-btn btn-secondary">
+              <span class="btn-text">BACK</span>
+            </button>
+            <button id="start-from-instructions-btn" class="arcade-btn btn-primary">
+              <span class="btn-text">START PLAYING</span>
+            </button>
+          </div>
         </div>
       </div>
 
-      <!-- END SCREEN -->
-      <div id="end-screen" class="overlay-screen hidden">
-        <div class="overlay-card">
-          <div class="logo-badge">ROUND COMPLETE</div>
-          <h2 id="end-title" class="game-title">VICTORY!</h2>
-          <p id="end-subtitle" class="game-subtitle">Super balloon popping skills!</p>
+      <!-- GAME OVER / REWARDS MODAL -->
+      <div id="game-over-screen" class="overlay-screen hidden">
+        <div class="arcade-modal game-over-modal">
+          <div class="modal-arcade-header">
+            <span id="game-over-badge" class="arcade-badge badge-gold">CARNIVAL COMPLETE</span>
+          </div>
+          <h2 id="game-over-title" class="arcade-title title-sm">MISSION ACCOMPLISHED!</h2>
 
-          <div class="stars-awarded" id="stars-container">
-            <span class="star-slot" data-star="1">★</span>
-            <span class="star-slot" data-star="2">★</span>
-            <span class="star-slot" data-star="3">★</span>
+          <!-- 3D Arcade Stars Display -->
+          <div class="stars-display-row" id="stars-container">
+            <span class="arcade-star star-active"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+            <span class="arcade-star star-active"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+            <span class="arcade-star"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
           </div>
 
-          <div class="score-summary-grid">
-            <div class="summary-box">
-              <span class="summary-label">FINAL SCORE</span>
-              <span id="final-score-val" class="summary-val highlight">0</span>
+          <div class="stats-scoreboard">
+            <div class="stat-cell">
+              <span class="stat-label">FINAL SCORE</span>
+              <span id="final-score" class="stat-value hud-mono">000850</span>
             </div>
-            <div class="summary-box">
-              <span class="summary-label">POPPED</span>
-              <span id="final-popped-val" class="summary-val">0</span>
+            <div class="stat-cell">
+              <span class="stat-label">ROUNDS</span>
+              <span id="final-rounds" class="stat-value">10 / 10</span>
             </div>
-            <div class="summary-box">
-              <span class="summary-label">MAX COMBO</span>
-              <span id="final-combo-val" class="summary-val">1x</span>
+            <div class="stat-cell">
+              <span class="stat-label">ACCURACY</span>
+              <span id="final-accuracy" class="stat-value">95%</span>
             </div>
-            <div class="summary-box">
-              <span class="summary-label">TIME LEFT</span>
-              <span id="final-time-val" class="summary-val">0s</span>
+            <div class="stat-cell">
+              <span class="stat-label">BEST COMBO</span>
+              <span id="final-combo" class="stat-value">6x</span>
+            </div>
+            <div class="stat-cell">
+              <span class="stat-label">TIME</span>
+              <span id="final-time" class="stat-value">45s</span>
             </div>
           </div>
 
-          <div class="action-buttons">
-            <button id="play-again-btn" class="arcade-btn btn-play">PLAY AGAIN</button>
-            <a href="index.html" class="arcade-btn btn-home">BACK TO NUMBERLAND</a>
+          <div class="arcade-actions">
+            <button id="play-again-btn" class="arcade-btn btn-primary">
+              <span class="btn-text">PLAY AGAIN</span>
+            </button>
           </div>
         </div>
       </div>
@@ -190,7 +199,6 @@
     </div>
   </div>
 
-  <script src="shared.js?v=retro3"></script>
-  <script src="game.js?v=retro3"></script>
+  <script src="game.js"></script>
 </body>
 </html>
